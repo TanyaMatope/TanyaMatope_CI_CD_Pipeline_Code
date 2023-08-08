@@ -1,0 +1,66 @@
+name: Windows CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '5.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore webapp1.sln
+
+    - name: Build
+      run: dotnet build C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release
+
+  test:
+    needs: build
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '5.0.x'
+
+    - name: Test
+      run: dotnet test C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release --collect:"XPlat Code Coverage"
+
+  deploy:
+    needs: test
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '5.0.x'
+
+    - name: Publish
+      run: dotnet publish C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release --output ./publish
+
+    - name: Deploy to Staging
+      run:dotnet deploy C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release --output ./publish
+
+        
+
+    - name: Notify on Deployment Failure
+      if: failure()
+      run: echo "Deployment to staging failed. Notify the team."
