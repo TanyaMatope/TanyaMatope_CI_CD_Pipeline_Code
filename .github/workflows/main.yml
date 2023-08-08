@@ -22,7 +22,7 @@ jobs:
       run: dotnet restore webapp1.sln
 
     - name: Build
-      run: dotnet build C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release
+      run: dotnet build ./webapp1.sln --configuration Release
 
   test:
     needs: build
@@ -38,7 +38,7 @@ jobs:
         dotnet-version: '5.0.x'
 
     - name: Test
-      run: dotnet test C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release --collect:"XPlat Code Coverage"
+      run: dotnet test ./webapp1.sln--configuration Release --collect:"XPlat Code Coverage"
 
   deploy:
     needs: test
@@ -54,7 +54,7 @@ jobs:
         dotnet-version: '5.0.x'
 
     - name: Publish
-      run: dotnet publish C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release --output ./publish
+      run: dotnet publish ./webapp1.sln --configuration Release --output ./publish
 
    # - name: Deploy to Staging
     
