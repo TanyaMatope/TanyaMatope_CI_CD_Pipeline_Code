@@ -56,9 +56,8 @@ jobs:
     - name: Publish
       run: dotnet publish C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release --output ./publish
 
-    - name: Deploy to Staging
-      run:dotnet deploy C:\Users\TANYA\OneDrive\Documents\2023 STUDIES\Business Programming\Formative 2\TanyaMatope_CI_CD_Pipeline_Code\webapp1.sln --configuration Release --output ./publish
-
+   # - name: Deploy to Staging
+    
         
 
     - name: Notify on Deployment Failure
